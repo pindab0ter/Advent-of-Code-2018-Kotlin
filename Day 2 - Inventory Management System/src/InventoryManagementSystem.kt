@@ -1,18 +1,31 @@
 package nl.pindab0ter.aoc2018.day2
 
-fun main(args: Array<String>) {
-    val boxes = ClassLoader
-        .getSystemResource("input")
-        .readText(Charsets.UTF_8)
-        .lines()
+val input = ClassLoader
+    .getSystemResource("input")
+    .readText(Charsets.UTF_8)
+    .lines()
 
-    println(boxes.appearancesFor(2) * boxes.appearancesFor(3))
+fun main(args: Array<String>) = print("""
+    Day 2: Inventory Management System
+
+    Part one: What is the checksum for your list of box IDs?
+    ${boxCount(input)}
+
+    What letters are common between the two correct box IDs?
+    ${findBoxes(input)}
+    """.trimIndent())
+
+fun boxCount(boxes: List<String>): Int {
+    return count(boxes, 2) * count(boxes, 3)
 }
 
-fun List<String>.appearancesFor(n: Int): Int = this
-    .filter { it.hasCharsAppearing(n) }
-    .count()
+fun count(boxes: List<String>, duplicates: Int) = boxes
+    .filter { box ->
+        box.fold(false) { acc, c ->
+            box.count { it == c } == duplicates || acc
+        }
+    }.count()
 
-fun String.hasCharsAppearing(n: Int) = fold(false) { acc, c ->
-    this.count { it == c } == n || acc
+fun findBoxes(boxes: List<String>): String {
+    return TODO()
 }

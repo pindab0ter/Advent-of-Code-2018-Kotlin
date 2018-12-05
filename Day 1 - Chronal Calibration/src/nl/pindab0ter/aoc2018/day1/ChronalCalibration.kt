@@ -6,8 +6,7 @@ val input: List<Int> = ClassLoader
     .lines()
     .map(String::toInt)
 
-fun main(args: Array<String>) {
-    print("""
+fun main(args: Array<String>) = print("""
     Day 1: Chronal Calibrations
 
     Part one: Starting with a frequency of zero, what is the resulting frequency after all of the changes in frequency have been applied?
@@ -16,7 +15,6 @@ fun main(args: Array<String>) {
     Part two: What is the first frequency your device reaches twice?
     ${findFirstRepeatedFrequency(input)}
     """.trimIndent())
-}
 
 fun findFinalFrequency(input: List<Int>): Int = input.sum()
 
