@@ -16,16 +16,22 @@ fun main(args: Array<String>) = ClassLoader
         )
     }
 
+// --- Part One ---
+
 fun boxCount(boxes: List<String>): Int {
     return count(boxes, 2) * count(boxes, 3)
 }
 
 fun count(boxes: List<String>, duplicates: Int) = boxes
     .filter { box ->
-        box.fold(false) { acc, c ->
-            box.count { it == c } == duplicates || acc
-        }
+        box.hasThisManyDuplicates(duplicates)
     }.count()
+
+fun String.hasThisManyDuplicates(amount: Int) = fold(false) { acc, char ->
+    count { it == char } == amount || acc
+}
+
+// --- Part Two ---
 
 fun findBoxes(boxes: List<String>): String = boxes
     .flatMap { i ->
