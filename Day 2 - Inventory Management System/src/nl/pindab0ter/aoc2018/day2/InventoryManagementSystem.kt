@@ -6,7 +6,7 @@ fun main(args: Array<String>) = ClassLoader
     .lines()
     .let { input ->
         print("""
-            Day 2: Inventory Management System
+            --- Day 2: Inventory Management System ---
 
             Part one: What is the checksum for your list of box IDs?
             ${boxCount(input)}

@@ -7,7 +7,7 @@ fun main(args: Array<String>) = ClassLoader
     .map(String::toInt)
     .let { input ->
         print("""
-            Day 1: Chronal Calibrations
+            --- Day 1: Chronal Calibrations ---
 
             Part one: Starting with a frequency of zero, what is the resulting frequency after all of the changes in frequency have been applied?
             ${findFinalFrequency(input)}
