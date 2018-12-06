@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Day 1 - Chronal Calibration/Day 1 - Chronal Calibration.iml" filepath="$PROJECT_DIR$/Day 1 - Chronal Calibration/Day 1 - Chronal Calibration.iml" />
       <module fileurl="file://$PROJECT_DIR$/Day 2 - Inventory Management System/Day 2 - Inventory Management System.iml" filepath="$PROJECT_DIR$/Day 2 - Inventory Management System/Day 2 - Inventory Management System.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Day 3 - No Matter How You Slice It/Day 3 - No Matter How You Slice It.iml" filepath="$PROJECT_DIR$/Day 3 - No Matter How You Slice It/Day 3 - No Matter How You Slice It.iml" />
     </modules>
   </component>
 </project>
