@@ -1,10 +1,11 @@
 package nl.pindab0ter.aoc2018.day1
 
-import kotlin.test.assertEquals
+import org.junit.Assert.assertEquals
+import org.junit.Test
 
 internal class ChronalCalibrationTest {
 
-    @org.junit.Test
+    @Test
     fun findFinalFrequency() = listOf(
         3 to findFinalFrequency(listOf(1, -2, 3, 1)),
         3 to findFinalFrequency(listOf(1, 1, 1)),
@@ -14,7 +15,7 @@ internal class ChronalCalibrationTest {
         assertEquals(expected, actual)
     }
 
-    @org.junit.Test
+    @Test
     fun findFirstRepeatedFrequency() = listOf(
         (0) to findFirstRepeatedFrequency(listOf(1, -1)),
         (10) to findFirstRepeatedFrequency(listOf(3, 3, 4, -2, -4)),
