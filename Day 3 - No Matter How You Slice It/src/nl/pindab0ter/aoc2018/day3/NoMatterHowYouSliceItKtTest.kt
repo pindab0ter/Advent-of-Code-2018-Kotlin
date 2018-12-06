@@ -5,7 +5,7 @@ import kotlin.test.assertEquals
 class NoMatterHowYouSliceItKtTest {
 
     private val input = listOf("#1 @ 1,3: 4x4", "#2 @ 3,1: 4x4", "#3 @ 5,5: 2x2")
-        .map(::parseClaim)
+        .map(Claim.Factory::fromString)
 
     @org.junit.Test
     fun contestedClaims() {
@@ -16,6 +16,6 @@ class NoMatterHowYouSliceItKtTest {
     @org.junit.Test
     fun findNonOverlappingClaim() {
         val actual = findNonOverlappingClaim(input)
-        assertEquals(Claim(3, (Square(5, 5, 2, 2))), actual)
+        assertEquals(Claim(3, Claim.Area(5, 5, 2, 2)), actual)
     }
 }
