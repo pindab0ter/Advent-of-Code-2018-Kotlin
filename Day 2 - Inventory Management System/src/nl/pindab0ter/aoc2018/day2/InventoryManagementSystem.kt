@@ -28,13 +28,12 @@ fun count(boxes: List<String>, duplicates: Int) = boxes
     }.count()
 
 fun findBoxes(boxes: List<String>): String = boxes
-    .map { i ->
+    .flatMap { i ->
         boxes.mapNotNull { j ->
             if (i.isNeighbourOf(j)) i.intersect(j)
             else null
         }
     }
-    .flatten()
     .first(String::isNotBlank)
 
 fun String.isNeighbourOf(other: String) = intersect(other).length == length - 1
