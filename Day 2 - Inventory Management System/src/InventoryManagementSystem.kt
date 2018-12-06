@@ -26,6 +26,19 @@ fun count(boxes: List<String>, duplicates: Int) = boxes
         }
     }.count()
 
-fun findBoxes(boxes: List<String>): String {
-    return TODO()
-}
+fun findBoxes(boxes: List<String>): String = boxes
+    .map { i ->
+        boxes.mapNotNull { j ->
+            if (i.isNeighbourOf(j)) i.intersect(j)
+            else null
+        }
+    }
+    .flatten()
+    .first(String::isNotBlank)
+
+fun String.isNeighbourOf(other: String) = intersect(other).length == length - 1
+
+fun String.intersect(other: String): String = this
+    .toCharArray()
+    .intersect(other.toCharArray().asIterable())
+    .joinToString("")

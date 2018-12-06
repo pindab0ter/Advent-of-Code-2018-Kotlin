@@ -8,14 +8,14 @@ internal class InventoryManagementSystemTest {
     fun boxCount() {
         val input = listOf("abcdef", "bababc", "abbcde", "abcccd", "aabcdd", "abcdee", "ababab")
         val actual = boxCount(input)
-        assertEquals(actual, 12)
+        assertEquals(12, actual)
     }
 
     @org.junit.Test
     fun findBoxes() {
         val input = listOf("abcde", "fghij", "klmno", "pqrst", "fguij", "axcye", "wvxyz")
         val actual = findBoxes(input)
-        assertEquals(actual, "fgij")
+        assertEquals("fgij", actual)
     }
 
 }
