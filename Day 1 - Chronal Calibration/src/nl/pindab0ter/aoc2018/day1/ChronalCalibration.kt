@@ -14,6 +14,7 @@ fun main(args: Array<String>) = ClassLoader
 
             Part two: What is the first frequency your device reaches twice?
             ${findFirstRepeatedFrequency(input)}
+
             """.trimIndent()
         )
     }

@@ -12,6 +12,7 @@ fun main(args: Array<String>) = ClassLoader
             ${boxCount(input)}
             What letters are common between the two correct box IDs?
             ${findBoxes(input)}
+
             """.trimIndent()
         )
     }
