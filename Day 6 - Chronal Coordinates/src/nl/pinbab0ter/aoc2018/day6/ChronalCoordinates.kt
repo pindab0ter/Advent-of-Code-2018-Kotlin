@@ -29,12 +29,17 @@ data class Grid(val points: List<Point>) {
     fun largestArea(): Int = (x..width)
         .flatMap { x ->
             (y..height).map { y ->
-                points.reduce { closest, point ->
-                    if (point.distanceTo(x, y) < closest.distanceTo(x, y)) point else closest
+                (points as List<Point?>).reduce { closest: Point?, point: Point? ->
+                    when {
+                        closest == null || point == null -> null
+                        point.distanceTo(x, y) == closest.distanceTo(x, y) -> null
+                        point.distanceTo(x, y) < closest.distanceTo(x, y) -> point
+                        else -> closest
+                    }
                 }
             }
         }
-        .filterNot { it.x == x || it.x == width || it.y == y || it.y == width }
+        .filterNot { it == null || it.x == x || it.x == width || it.y == y || it.y == width }
         .map { points.indexOf(it) }
         .groupingBy { it }
         .eachCount().values.max()!!
