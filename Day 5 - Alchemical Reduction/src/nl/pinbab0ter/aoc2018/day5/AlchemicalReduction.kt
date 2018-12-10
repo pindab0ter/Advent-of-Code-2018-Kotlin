@@ -10,9 +10,16 @@ fun main(args: Array<String>) = ClassLoader
             Part one: How many units remain after fully reacting the polymer you scanned?
             ${reduce(input).length}
 
+            Part two: What is the length of the shortest polymer you can produce by removing all units of exactly one type and fully reacting the result?
+            ${shortestPolymer(input)}
+
             """.trimIndent()
         )
     }
+
+fun shortestPolymer(input: String): Int = ('a'..'z').fold(emptyList<String>()) { acc, unit ->
+    acc + reduce(input.filter { it.equals(unit, true).not() })
+}.minBy { it.length }!!.length
 
 fun reduce(input: String): String = input.fold("") { acc: String, c: Char ->
     if (acc.isBlank() || acc.last().formsPairWith(c).not()) acc + c

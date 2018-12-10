@@ -8,9 +8,15 @@ class AlchemicalReductionKtTest {
     private val input = "dabAcCaCBAcCcaDA"
 
     @Test
-    fun reducePairs() {
+    fun reduce() {
         val actual = reduce(input)
-        println(input)
         assertEquals("dabCBAcaDA", actual)
     }
+
+    @Test
+    fun shortestPolymer() {
+        val actual = shortestPolymer(input)
+        assertEquals(4, actual)
+    }
+
 }
