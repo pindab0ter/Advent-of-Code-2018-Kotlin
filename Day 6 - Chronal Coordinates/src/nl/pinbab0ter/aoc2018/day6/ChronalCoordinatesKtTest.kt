@@ -16,7 +16,7 @@ class ChronalCoordinatesKtTest {
 
     @Test
     fun reduce() {
-        val actual = largestArea(input)
+        val actual = Grid(input).largestArea()
         assertEquals(17, actual)
     }
 
