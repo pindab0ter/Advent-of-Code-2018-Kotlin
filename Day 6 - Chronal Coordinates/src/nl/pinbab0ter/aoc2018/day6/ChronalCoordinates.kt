@@ -1,5 +1,6 @@
 package nl.pinbab0ter.aoc2018.day6
 
+import java.util.*
 import kotlin.math.abs
 
 fun main(args: Array<String>) = ClassLoader
@@ -8,13 +9,14 @@ fun main(args: Array<String>) = ClassLoader
     .lines()
     .map { it.split(", ").map(String::toInt) }
     .map { (x, y) -> Point(x, y) }
-    .let { input ->
+    .let(::Grid)
+    .let { grid ->
         print("""
             --- Day 6: Chronal Coordinates ---
 
             Part one: What is the size of the largest area that isn't infinite?
 
-            ${Grid(input).largestArea()}
+            ${grid.largestArea()}
 
             """.trimIndent()
         )
@@ -26,26 +28,26 @@ data class Grid(val points: List<Point>) {
     private val width: Int = points.maxBy { it.x }!!.x
     private val height: Int = points.maxBy { it.y }!!.y
 
-    fun largestArea(): Int = (x..width)
-        .flatMap { x ->
-            (y..height).map { y ->
-                (points as List<Point?>).reduce { closest: Point?, point: Point? ->
-                    when {
-                        closest == null || point == null -> null
-                        point.distanceTo(x, y) == closest.distanceTo(x, y) -> null
-                        point.distanceTo(x, y) < closest.distanceTo(x, y) -> point
-                        else -> closest
-                    }
-                }
-            }
-        }
-        .filterNot { it == null || it.x == x || it.x == width || it.y == y || it.y == width }
-        .map { points.indexOf(it) }
-        .groupingBy { it }
-        .eachCount().values.max()!!
-}
+    fun largestArea(): Int = iterateOverGrid { x, y ->
+        points.map { point -> point.distanceTo(x, y) to point }              // Calculate the distance for each Point
+            .groupBy({ (distance, _) -> distance }, { (_, point) -> point }) // Group by distance
+            .toSortedMap().first()                                           // Take the closest
+            .let { if (it?.size == 1) it.first() else null }                 // Take it unless there's more than one
+    }
+    .filterNotNull()
+    .filterNot { it.x in listOf(x, width) || it.y in listOf(y, height) }     // Remove any Points on an edge
+    .groupingBy { it }                                                       // Group by Point
+    .eachCount().values.max()!!                                              // Get the group with the highest count
 
+    private fun <T> iterateOverGrid(transform: (Int, Int) -> T): List<T> = (x until width).flatMap { x: Int ->
+        (y until height).map { y: Int ->
+            transform(x, y)
+        }
+    }
+}
 
 data class Point(val x: Int, val y: Int) {
     fun distanceTo(x: Int, y: Int) = abs(this.x - x) + abs(this.y - y)
 }
+
+fun <K, V> SortedMap<K, V>.first(): V? = get(firstKey())
