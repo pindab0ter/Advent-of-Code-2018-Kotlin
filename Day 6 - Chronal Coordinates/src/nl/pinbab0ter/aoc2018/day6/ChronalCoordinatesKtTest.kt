@@ -20,4 +20,10 @@ class ChronalCoordinatesKtTest {
         assertEquals(17, actual)
     }
 
+    @Test
+    fun sizeOfSafestPointWithin() {
+        val actual = Grid(input).sizeOfSafestPointWithin(32)
+        assertEquals(16, actual)
+    }
+
 }
