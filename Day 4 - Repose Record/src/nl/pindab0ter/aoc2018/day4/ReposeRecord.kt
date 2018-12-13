@@ -62,18 +62,21 @@ class ReposeRecord(entries: List<String>) {
         .let { (guard, _) -> guard }
 
     fun mostConsistentlySleepingGuardHash(): Int = mostConsistentlySleepingGuard()
-        .let { (guard, minute) ->
-            guard * minute
-        }
+        .let { (guard, minute) -> guard * minute }
 
     fun mostConsistentlySleepingGuard(): Pair<Int, Int> = log
-        .map { (guard, shifts) ->
-            println("$guard, $shifts")
-            guard to timesAsleepPerMinute(shifts)
-                .maxBy { (_, times) -> times }!! // TODO: One guard never sleeps
+        .filter { (_, shifts) ->
+            shifts.sumBy { shift -> shift.timeAsleep() } > 0
         }
-        .maxBy { (_, record) -> record.let { (_, times) -> times } }!!
-        .let { (guard, record) -> guard to record.let { (minute, _) -> minute } }
+        .map { (guard, shifts) ->
+            guard to timesAsleepPerMinute(shifts).maxBy { (_, times) -> times }!!
+        }
+        .maxBy { (_, record) ->
+            record.let { (_, times) -> times }
+        }!!
+        .let { (guard, record) ->
+            guard to record.let { (minute, _) -> minute }
+        }
 
     private fun timesAsleepPerMinute(shifts: List<Shift>): Map<Int, Int> = shifts
         .flatMap { it.asleepOnMinutes() }
@@ -86,7 +89,7 @@ class ReposeRecord(entries: List<String>) {
 
         data class Nap(val from: Int, val till: Int) {
             val length: Int get() = till - from
-            fun asRange(): IntRange = from..till
+            fun asRange(): IntRange = from until till
         }
     }
 }
