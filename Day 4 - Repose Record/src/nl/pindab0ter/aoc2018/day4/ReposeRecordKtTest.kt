@@ -26,8 +26,8 @@ class ReposeRecordKtTest {
     )
 
     @Test
-    fun contestedClaims() {
-        val actual = partOne(input)
+    fun safestMomentHash() {
+        val actual = ReposeRecord(input).safestMomentHash()
         assertEquals(240, actual)
     }
 }
