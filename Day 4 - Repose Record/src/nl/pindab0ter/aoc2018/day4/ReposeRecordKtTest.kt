@@ -26,8 +26,14 @@ class ReposeRecordKtTest {
     )
 
     @Test
-    fun safestMomentHash() {
-        val actual = ReposeRecord(input).safestMomentHash()
+    fun sleepiestGuardHash() {
+        val actual = ReposeRecord(input).sleepiestGuardHash()
         assertEquals(240, actual)
+    }
+
+    @Test
+    fun mostConsistentSleeperHash() {
+        val actual = ReposeRecord(input).mostConsistentlySleepingGuardHash()
+        assertEquals(4455, actual)
     }
 }

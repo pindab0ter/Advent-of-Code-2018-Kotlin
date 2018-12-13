@@ -12,8 +12,13 @@ fun main(args: Array<String>) = ClassLoader
         print("""
             --- Day 4: Repose Record ---
 
-            Part one: What is the ID of the guard you chose multiplied by the minute you chose?
-            ${shiftLog.safestMomentHash()}
+            Strategy one: Find the guard that has the most minutes asleep. What minute does that guard spend asleep the most?
+            Guard: ${shiftLog.sleepiestGuard()}
+            Hash:  ${shiftLog.sleepiestGuardHash()}
+
+            Strategy two: Of all guards, which guard is most frequently asleep on the same minute?
+            Guard: ${shiftLog.mostConsistentlySleepingGuard().first}
+            Hash:  ${shiftLog.mostConsistentlySleepingGuardHash()}
 
             """.trimIndent()
         )
@@ -32,35 +37,52 @@ class ReposeRecord(entries: List<String>) {
                 .map(String::toIntOrNull)
 
             when {
-                entry.contains("Guard") -> log[guard!!] = log.getOrDefault(guard, mutableListOf())
+                entry.contains("Guard")        -> log[guard!!] = log.getOrDefault(guard, mutableListOf())
                     .plus(Shift(month!!, day!!))
                     .also { currentGuard = guard }
                 entry.contains("falls asleep") -> sleepingFrom = minute
-                entry.contains("wakes up") -> log[currentGuard]?.last()!!.naps
+                entry.contains("wakes up")     -> log[currentGuard]?.last()!!.naps
                     .add(Nap(sleepingFrom!!, minute!!))
             }
         }
     }
 
-    fun safestMomentHash(): Int = sleepiestGuard().let { guard -> guard * safestMomentFor(guard) }
+    fun sleepiestGuardHash(): Int = sleepiestGuard()
+        .let { guard ->
+            guard * timesAsleepPerMinute(log[guard]!!)
+                .maxBy { (_, times) -> times }!!
+                .let { (minute, _) -> minute }
+        }
 
-    private fun safestMomentFor(guard: Int): Int = log[guard]!!
-        .flatMap { it.momentsAsleep() }
-        .groupingBy { it }
-        .eachCount()
-        .maxBy { it.value }!!
-        .key
-
-    private fun sleepiestGuard(): Int = log
+    fun sleepiestGuard(): Int = log
         .map { (guard: Int, shifts: List<Shift>) ->
             guard to shifts.sumBy { it.timeAsleep() }
         }
         .maxBy { (_, timeAsleep) -> timeAsleep }!!
-        .first
+        .let { (guard, _) -> guard }
+
+    fun mostConsistentlySleepingGuardHash(): Int = mostConsistentlySleepingGuard()
+        .let { (guard, minute) ->
+            guard * minute
+        }
+
+    fun mostConsistentlySleepingGuard(): Pair<Int, Int> = log
+        .map { (guard, shifts) ->
+            println("$guard, $shifts")
+            guard to timesAsleepPerMinute(shifts)
+                .maxBy { (_, times) -> times }!! // TODO: One guard never sleeps
+        }
+        .maxBy { (_, record) -> record.let { (_, times) -> times } }!!
+        .let { (guard, record) -> guard to record.let { (minute, _) -> minute } }
+
+    private fun timesAsleepPerMinute(shifts: List<Shift>): Map<Int, Int> = shifts
+        .flatMap { it.asleepOnMinutes() }
+        .groupingBy { it }
+        .eachCount()
 
     data class Shift(val month: Int, val day: Int, val naps: MutableList<Nap> = mutableListOf()) {
         fun timeAsleep(): Int = naps.sumBy { it.length }
-        fun momentsAsleep(): List<Int> = naps.flatMap { it.asRange() }
+        fun asleepOnMinutes(): List<Int> = naps.flatMap { it.asRange() }
 
         data class Nap(val from: Int, val till: Int) {
             val length: Int get() = till - from
