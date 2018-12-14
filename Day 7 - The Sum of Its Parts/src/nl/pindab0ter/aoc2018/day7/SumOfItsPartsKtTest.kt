@@ -15,8 +15,8 @@ class SumOfItsPartsKtTest {
     )
 
     @org.junit.Test
-    fun partOne() {
-        val actual = partOne(input)
+    fun correctOrder() {
+        val actual = correctOrder(input)
         assertEquals("CABDFE", actual)
     }
 }
