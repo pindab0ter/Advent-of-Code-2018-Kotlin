@@ -1,5 +1,6 @@
 package nl.pindab0ter.aoc2018.day7
 
+import org.junit.Test
 import kotlin.test.assertEquals
 
 class SumOfItsPartsKtTest {
@@ -14,9 +15,15 @@ class SumOfItsPartsKtTest {
         'F' to 'E'
     )
 
-    @org.junit.Test
+    @Test
     fun correctOrder() {
-        val actual = correctOrder(input)
+        val actual = SumOfItsParts(input).correctOrder()
         assertEquals("CABDFE", actual)
+    }
+
+    @Test
+    fun teamWork() {
+        val actual = SumOfItsParts(input).teamwork(workers = 2, timePerStep = 0)
+        assertEquals(15, actual)
     }
 }
