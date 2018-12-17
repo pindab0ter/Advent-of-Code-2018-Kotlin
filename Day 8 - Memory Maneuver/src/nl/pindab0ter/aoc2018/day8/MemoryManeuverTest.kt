@@ -13,4 +13,10 @@ class MemoryManeuverTest {
         assertEquals(138, actual)
     }
 
+    @Test
+    fun value() {
+        val actual = Node.fromIntList(input).value
+        assertEquals(66, actual)
+    }
+
 }

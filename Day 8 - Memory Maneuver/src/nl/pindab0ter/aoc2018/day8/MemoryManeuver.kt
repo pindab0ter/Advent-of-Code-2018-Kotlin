@@ -13,6 +13,10 @@ fun main(args: Array<String>) = ClassLoader
 
             ${Node.fromIntList(input).dataSum}
 
+            Part two: What is the value of the root node?
+
+            ${Node.fromIntList(input).value}
+
             """.trimIndent()
         )
     }
@@ -20,6 +24,10 @@ fun main(args: Array<String>) = ClassLoader
 data class Node(val children: List<Node>, val data: List<Int>) {
     val size: Int get() = 2 + children.sumBy { it.size } + data.size
     val dataSum: Int get() = children.sumBy { it.dataSum } + data.sum()
+    val value: Int
+        get() =
+            if (children.isEmpty()) data.sum()
+            else data.sumBy { children.getOrNull(it - 1)?.value ?: 0 }
 
     companion object Factory {
         fun fromIntList(input: List<Int>): Node {
