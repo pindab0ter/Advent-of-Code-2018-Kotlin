@@ -9,13 +9,13 @@ class MemoryManeuverTest {
 
     @Test
     fun dataSum() {
-        val actual = Node.fromIntList(input).dataSum
+        val actual = Node.from(input.iterator()).dataSum
         assertEquals(138, actual)
     }
 
     @Test
     fun value() {
-        val actual = Node.fromIntList(input).value
+        val actual = Node.from(input.iterator()).value
         assertEquals(66, actual)
     }
 
