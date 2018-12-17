@@ -3,7 +3,7 @@ package nl.pinbab0ter.aoc2018.day6
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class ChronalCoordinatesKtTest {
+class ChronalCoordinatesTest {
 
     private val input = listOf(
         Point(1, 1),

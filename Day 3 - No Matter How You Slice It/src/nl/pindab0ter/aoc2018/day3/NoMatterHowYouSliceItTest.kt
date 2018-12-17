@@ -3,7 +3,7 @@ package nl.pindab0ter.aoc2018.day3
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class NoMatterHowYouSliceItKtTest {
+class NoMatterHowYouSliceItTest {
 
     private val input = listOf("#1 @ 1,3: 4x4", "#2 @ 3,1: 4x4", "#3 @ 5,5: 2x2")
         .map(Claim.Factory::fromString)

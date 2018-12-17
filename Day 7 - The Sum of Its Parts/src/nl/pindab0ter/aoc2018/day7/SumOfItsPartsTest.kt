@@ -3,7 +3,7 @@ package nl.pindab0ter.aoc2018.day7
 import org.junit.Test
 import kotlin.test.assertEquals
 
-class SumOfItsPartsKtTest {
+class SumOfItsPartsTest {
 
     private val input = listOf(
         'C' to 'A',

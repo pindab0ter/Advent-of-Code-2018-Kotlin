@@ -3,7 +3,7 @@ package nl.pindab0ter.aoc2018.day4
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class ReposeRecordKtTest {
+class ReposeRecordTest {
 
     private val input = listOf(
         "[1518-11-01 00:00] Guard #10 begins shift",

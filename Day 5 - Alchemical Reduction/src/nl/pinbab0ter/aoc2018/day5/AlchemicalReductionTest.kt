@@ -3,7 +3,7 @@ package nl.pinbab0ter.aoc2018.day5
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class AlchemicalReductionKtTest {
+class AlchemicalReductionTest {
 
     private val input = "dabAcCaCBAcCcaDA"
 
