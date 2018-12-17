@@ -11,32 +11,35 @@ fun main(args: Array<String>) = ClassLoader
 
             Part one: What is the sum of all metadata entries?
 
-            $input
+            ${Node.fromIntList(input).dataSum}
 
             """.trimIndent()
         )
     }
 
-data class Node(val children: List<Node>, val metadata: List<Int>) {
-    val size: Int get() = 2 + children.sumBy { it.size } + metadata.size
-    val metaDataSum: Int get() = children.sumBy { it.metaDataSum } + metadata.sum()
-}
+data class Node(val children: List<Node>, val data: List<Int>) {
+    val size: Int get() = 2 + children.sumBy { it.size } + data.size
+    val dataSum: Int get() = children.sumBy { it.dataSum } + data.sum()
 
-fun parse(input: List<Int>): Node {
-    val amountOfChildren = input[0]
-    val amountOfMetadata = input[1]
-    val remainder = input.drop(2)
+    companion object Factory {
+        fun fromIntList(input: List<Int>): Node {
+            val childrenSize = input[0]
+            val dataSize = input[1]
+            val remainder = input.drop(2)
 
-    val children: List<Node> =
-        if (amountOfChildren == 0) emptyList()
-        else (0 until amountOfChildren).fold(emptyList()) { children: List<Node>, _: Int ->
-            val thisRemainder = remainder.drop(children.sumBy { it.size })
-            children + parse(thisRemainder)
+            val children: List<Node> = (0 until childrenSize)
+                .fold(emptyList()) { nodes: List<Node>, _: Int ->
+                    nodes + fromIntList(remainder.drop(nodes.combinedSize))
+                }
+
+            val data: List<Int> = remainder
+                .drop(children.combinedSize)
+                .take(dataSize)
+
+            return Node(children, data)
         }
 
-    val metadata: List<Int> = remainder
-        .drop(children.sumBy { it.size })
-        .take(amountOfMetadata)
-
-    return Node(children, metadata)
+    }
 }
+
+val List<Node>.combinedSize: Int get() = sumBy { it.size }
