@@ -15,10 +15,10 @@ class MarbleManiaTest {
     )
 
     @Test
-    fun dataSum() {
+    fun highScore() {
         values.forEach { (players, lastMarble, expected) ->
-            val actual = MarbleMania(players, lastMarble).highScore()
-                assertEquals(expected, actual)
+            val actual = MarbleMania(players, lastMarble).play()
+                assertEquals(expected.toLong(), actual)
         }
     }
 }
