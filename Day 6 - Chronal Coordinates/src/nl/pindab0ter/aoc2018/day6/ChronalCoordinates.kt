@@ -1,4 +1,4 @@
-package nl.pinbab0ter.aoc2018.day6
+package nl.pindab0ter.aoc2018.day6
 
 import java.util.*
 import kotlin.math.abs

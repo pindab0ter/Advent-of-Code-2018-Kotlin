@@ -1,4 +1,4 @@
-package nl.pinbab0ter.aoc2018.day5
+package nl.pindab0ter.aoc2018.day5
 
 fun main(args: Array<String>) = ClassLoader
     .getSystemResource("input")

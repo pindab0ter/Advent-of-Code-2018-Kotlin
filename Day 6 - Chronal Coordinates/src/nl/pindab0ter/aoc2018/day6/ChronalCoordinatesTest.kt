@@ -1,4 +1,4 @@
-package nl.pinbab0ter.aoc2018.day6
+package nl.pindab0ter.aoc2018.day6
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
